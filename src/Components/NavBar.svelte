@@ -19,6 +19,7 @@
   let availableYears;
   let startYear;
   let endYear;
+  let beginningOf12YearSpan;
 
   $: {
 	startYear = start.getFullYear();
@@ -40,30 +41,15 @@
       });
 	});
 
+	beginningOf12YearSpan = year - 4;
 	let yearRangeLength = endYear - startYear;
 	let yearRange = [];
-	for (let i = 0; (startYear + i <= endYear); i++) {
-		yearRange[i] = startYear + i;
+	for (let i = 0; i < 12; i++) {
+		// yearRange[i] = startYear + i;
+		yearRange[i] = beginningOf12YearSpan + i;
 	}
 	// We want to show years 12 at a time, but we only want to show the years which are included in the range (between startYear and endYear)
-	availableYears = yearRange.filter(function(y) {
-	  // TESTING: SKIPPING
-	  // return true;
-	  let distanceFromUpperBoundary = endYear - y;
-	  let distanceFromLowerBoundary = y - startYear;
-	  let lowerRange = distanceFromLowerBoundary < 6 ? distanceFromLowerBoundary : 6; // 11 instead of 12 because we are counting the currently selected year as well
-	  let upperRange = distanceFromUpperBoundary < 6 ? distanceFromUpperBoundary : 6; // Ditto
-	 // TESTING 
-	  console.log(y===year?"CURRENT YEAR":"            ","y",y,"year",year,"lowerRange",lowerRange,"upperRange",upperRange,"distanceFromLowerBoundary",distanceFromLowerBoundary,"distanceFromUpperBoundary",distanceFromUpperBoundary);
-	  if ( // FIXME: ? 
-		  y === year || // If current year
-		  (y >= year - lowerRange && y <= year + upperRange) // If within the 12 year range
-	   ) {
-		   return true;
-	   } else {
-		   return false;
-	   }
-	}).map((y, i) => {
+	availableYears = yearRange.map((y, i) => {
 	  return Object.assign({}, {
         name: y,
         abbrev: y
