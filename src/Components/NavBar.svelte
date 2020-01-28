@@ -47,10 +47,12 @@
 	}
 	// We want to show years 12 at a time, but we only want to show the years which are included in the range (between startYear and endYear)
 	availableYears = yearRange.filter(function(y) {
+	  // TESTING: SKIPPING
+	  // return true;
 	  let distanceFromUpperBoundary = endYear - y;
 	  let distanceFromLowerBoundary = y - startYear;
-	  let lowerRange = Math.min(distanceFromUpperBoundary, 11); // 11 instead of 12 because we are counting the currently selected year as well
-	  let upperRange = Math.min(distanceFromLowerBoundary, 11); // Ditto
+	  let lowerRange = distanceFromLowerBoundary < 6 ? distanceFromLowerBoundary : 6; // 11 instead of 12 because we are counting the currently selected year as well
+	  let upperRange = distanceFromUpperBoundary < 6 ? distanceFromUpperBoundary : 6; // Ditto
 	 // TESTING 
 	  console.log(y===year?"CURRENT YEAR":"            ","y",y,"year",year,"lowerRange",lowerRange,"upperRange",upperRange,"distanceFromLowerBoundary",distanceFromLowerBoundary,"distanceFromUpperBoundary",distanceFromUpperBoundary);
 	  if ( // FIXME: ? 
