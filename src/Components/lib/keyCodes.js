@@ -3,6 +3,7 @@ export const keyCodes = {
   up: 38,
   right: 39,
   down: 40,
+  shift: 16,
   pgup: 33,
   pgdown: 34,
   enter: 13,

@@ -129,8 +129,15 @@
   }
 
   function changeYear(selectedYear) {
-    year = selectedYear;
-    highlighted = new Date(year, month, 1);
+	let day = 1;
+	year = selectedYear;
+	// Check if we are past the boundary either direction, and correct
+	if (year === start.getFullYear() && month < start.getMonth()) {
+		month = start.getMonth();
+	} else if (year === end.getFullYear() && month > end.getMonth()) {
+		month = end.getMonth();
+	}
+    highlighted = new Date(year, month, day);
   }
 
   function incrementMonth(direction, day = 1) {
@@ -233,10 +240,38 @@
         incrementDayHighlighted(7);
         break;
       case keyCodes.pgup:
-        incrementMonth(-1);
+		if (!evt.shiftKey) {
+		  incrementMonth(-1);
+		} else {
+		  let yearsToDecrement = 1;
+		  if (evt.ctrlKey) {
+		    yearsToDecrement = 5;
+		  }	
+		  for (let i = 0; i < yearsToDecrement; i++) {
+		    if (canDecrementYear && (year - 1 >= start.getFullYear()) ) { // borrowing the same logic as canIncrementYear
+			  changeYear(year - 1);
+			} else {
+				break;
+			}
+		  }
+		}
         break;
       case keyCodes.pgdown:
-        incrementMonth(1);
+		if (!evt.shiftKey) {
+		  incrementMonth(1);
+		} else {
+		  let yearsToIncrement = 1;
+		  if (evt.ctrlKey) {
+		    yearsToIncrement = 5;
+		  }	
+		  for (let i = 0; i < yearsToIncrement; i++) {
+			if (canIncrementYear && (year + 1 <= end.getFullYear()) ) { // borrowing the same logic as canIncrementYear
+				changeYear(year + 1);
+			} else {
+				break;
+			}
+		  }
+		}
         break;
       case keyCodes.escape:
         // eslint-disable-next-line
