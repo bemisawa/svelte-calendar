@@ -26,7 +26,8 @@
 	endYear = end.getFullYear();
 
     let isOnLowerBoundary = startYear === year;
-    let isOnUpperBoundary = endYear === year;
+	let isOnUpperBoundary = endYear === year;
+	
     availableMonths = monthsOfYear.map((m, i) => {
       return Object.assign({}, {
         name: m[0],
@@ -42,10 +43,8 @@
 	});
 
 	beginningOf12YearSpan = year - 4;
-	let yearRangeLength = endYear - startYear;
 	let yearRange = [];
 	for (let i = 0; i < 12; i++) {
-		// yearRange[i] = startYear + i;
 		yearRange[i] = beginningOf12YearSpan + i;
 	}
 	// We want to show years 12 at a time, but we only want to show the years which are included in the range (between startYear and endYear)
@@ -55,11 +54,7 @@
         abbrev: y
       }, {
         selectable:
-          (!isOnLowerBoundary && !isOnUpperBoundary)
-          || (
-            (!isOnLowerBoundary || y >= start.getFullYear())
-            && (!isOnUpperBoundary || y <= end.getFullYear())
-          )
+          (y >= startYear) && (y <= endYear)
 	  });
 	});
 	console.log(availableYears);
