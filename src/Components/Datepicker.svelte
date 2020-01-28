@@ -97,8 +97,8 @@
   $: firstVisibleDate = visibleMonth.weeks[0].days[0].date;
   $: canIncrementMonth = monthIndex < months.length - 1;
   $: canDecrementMonth = monthIndex > 0;
-  $: canIncrementYear = true; // FIXME: monthIndex < months.length - 1;
-  $: canDecrementYear = true; // FIXME: monthIndex > 0;
+  $: canIncrementYear = year + 1 <= end.getFullYear();
+  $: canDecrementYear = year - 1 >= start.getFullYear();
   $: wrapperStyle = `
     --button-background-color: ${buttonBackgroundColor};
     --button-border-color: ${buttonBorderColor};
