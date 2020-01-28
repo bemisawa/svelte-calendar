@@ -123,7 +123,7 @@
     {#each availableYears as yearDefinition, index}
       <div 
         class="year-selector--year" 
-        class:selected={startYear + index === year}
+        class:selected={yearDefinition.name === year}
         class:selectable={yearDefinition.selectable}
         on:click={e => yearSelected(e, { y: yearDefinition, i: startYear + index })}
       >
