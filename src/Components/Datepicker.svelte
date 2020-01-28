@@ -97,6 +97,8 @@
   $: firstVisibleDate = visibleMonth.weeks[0].days[0].date;
   $: canIncrementMonth = monthIndex < months.length - 1;
   $: canDecrementMonth = monthIndex > 0;
+  $: canIncrementYear = true; // FIXME: monthIndex < months.length - 1;
+  $: canDecrementYear = true; // FIXME: monthIndex > 0;
   $: wrapperStyle = `
     --button-background-color: ${buttonBackgroundColor};
     --button-border-color: ${buttonBorderColor};
@@ -126,11 +128,26 @@
     highlighted = new Date(year, month, 1);
   }
 
+  function changeYear(selectedYear) {
+    year = selectedYear;
+    highlighted = new Date(year, month, 1);
+  }
+
   function incrementMonth(direction, day = 1) {
     if (direction === 1 && !canIncrementMonth) return;
     if (direction === -1 && !canDecrementMonth) return;
     let current = new Date(year, month, 1);
     current.setMonth(current.getMonth() + direction);
+    month = current.getMonth();
+    year = current.getFullYear();
+    highlighted = new Date(year, month, day);
+  }
+
+  function incrementYear(direction, day = 1) {
+    if (direction === 1 && !canIncrementYear) return;
+    if (direction === -1 && !canDecrementYear) return;
+    let current = new Date(year, month, 1);
+    current.setFullYear(current.getFullYear() + direction);
     month = current.getMonth();
     year = current.getFullYear();
     highlighted = new Date(year, month, day);
@@ -283,11 +300,15 @@
           {year}
           {canIncrementMonth}
           {canDecrementMonth}
+		  {canIncrementYear}
+          {canDecrementYear}
           {start}
           {end}
           {monthsOfYear}
           on:monthSelected={e => changeMonth(e.detail)}
           on:incrementMonth={e => incrementMonth(e.detail)} 
+		  on:yearSelected={e => changeYear(e.detail)}
+          on:incrementYear={e => incrementYear(e.detail)} 
         />
         <div class="legend">
           {#each sortedDaysOfWeek as day}

@@ -52,7 +52,7 @@
     -webkit-flex-flow: row;
     justify-content: space-around;
     -ms-grid-column: 1;
-    grid-column: 1; 
+    grid-column: 1;
   }
   .week:nth-child(6n + 1) { 
     -ms-grid-row: 1; 

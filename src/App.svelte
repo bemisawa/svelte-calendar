@@ -12,7 +12,7 @@
 	let exampleChosen = false;
 	
 	$: end = new Date(start.getTime() + 1000 * 3600 * 24 * 720);
-	
+		
 	let threeDaysInPast;
 	$: {
 	  const date = new Date(today);
